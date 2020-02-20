@@ -1,0 +1,92 @@
+```plantuml
+
+@startuml compactor-seq
+
+activate Client
+Client -> Car: new()
+
+activate Car
+Client <-- Car: return Car
+
+
+
+
+Client -> Car: AddPart(engine Engine)
+Car ->Engine: new()
+activate Engine
+
+
+
+CylinderBlock <- Engine:new 
+activate CylinderBlock
+CylinderBlock --> Engine:return CylinderBlock
+deactivate CylinderBlock
+
+
+Sump <- Engine:new 
+activate Sump
+Sump --> Engine:return Sump
+deactivate Sump
+
+
+
+
+Crankshaft <- Engine:new 
+activate Crankshaft
+Crankshaft --> Engine:return Crankshaft
+deactivate Crankshaft
+
+
+
+Rod <- Engine:new 
+activate Rod
+Rod --> Engine:return Rod
+deactivate Rod
+
+deactivate Engine
+
+Client -> Car: AddPart(suspenstion Suspenstion)
+Car ->Suspenstion: new()
+activate Suspenstion
+
+
+Damping <- Suspenstion:new 
+activate Damping
+Damping --> Suspenstion:return Dampings
+deactivate Damping
+
+Stabilizer  <- Suspenstion:new()
+activate Stabilizer
+Stabilizer --> Suspenstion:return Stabilizer
+deactivate Stabilizer
+
+Rack  <- Suspenstion:new()
+activate Rack
+Rack --> Suspenstion:return Rack
+
+deactivate Rack
+Lever  <- Suspenstion:new()
+activate Lever
+Lever --> Suspenstion:return Lever
+
+deactivate Lever
+Spring  <- Suspenstion:new()
+activate Spring
+Spring --> Suspenstion:return Spring
+
+deactivate Spring
+Absorber <- Suspenstion:new()
+activate Absorber
+Absorber --> Suspenstion:return Absorber
+
+deactivate Absorber
+deactivate Suspenstion
+
+
+
+
+
+
+@enduml
+
+```

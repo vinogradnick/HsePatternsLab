@@ -1,0 +1,27 @@
+@startuml observer-ts-class
+interface Subject {
+    attach(observer: Observer): void;
+
+    detach(observer: Observer): void;
+
+    notify(): void;
+}
+class SubjectFlex<T> implements Subject {
+    state: number = 0;
+    observers: Observer[] = [];
+    attach(observer: Observer): void;
+    detach(observer: Observer): void;
+    public notify(): void
+    ReceiveMetrics();
+}
+interface Observer {
+    update(subject: Subject): void;
+}
+class UniqueObserver<T> implements Observer{
+    metricRoute: string;
+    @observable metrics: IObservableValue<any[]>;
+    parseFunction: (data: string) => any;
+    async update(subject: Subject);
+}
+UniqueObserver --> Subject
+@enduml

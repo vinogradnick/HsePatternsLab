@@ -1,0 +1,41 @@
+```plantuml
+
+@startuml compactor
+
+interface Service{
+SpeedUp()
+	SpeedDown()
+	GearUp()
+	GearDown()
+	}
+class CarService{
+    engine Engine
+    transmission Transmission
+     SpeedUp()
+   	SpeedDown()
+   	GearUp()
+   	GearDown()
+}
+class Proxy{
+    SpeedUp()
+	SpeedDown()
+	GearUp()
+	GearDown()
+}
+class Engine{
+    fuel  int
+	speed int
+}
+class Transmission{
+gear int
+}
+CarService -|> Service
+Proxy -|> Service
+Proxy o-- CarService
+CarService --> Engine
+CarService --> Transmission
+
+
+@enduml
+
+```

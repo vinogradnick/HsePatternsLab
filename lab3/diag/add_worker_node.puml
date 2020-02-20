@@ -1,0 +1,37 @@
+@startuml add_worker_node
+
+skinparam activity {
+	BackgroundColor White
+	ArrowColor Black
+	BorderColor Black
+	BackgroundColor White
+	BorderColor Black
+}
+
+|Администратор|
+start
+:Добавление рабочих нод ;
+
+|Система|
+:Проверка уровня доступа;
+if(Есть уровень доступа ) then(Да)
+        if(Есть свободные ресурсы ) then(Да)
+        :Добавить рабочую ноду;
+        |Администратор|
+        :Сообщение об успешном добавлении ноды;
+        stop
+    else(Нет)
+        |Администратор|
+        :Сообщение о недостаточном уровне доступа;
+        stop
+    endif
+else(Нет)
+    |Администратор|
+    :Сообщение о заполненности ресурсов;
+    stop
+endif
+
+
+
+@enduml
+

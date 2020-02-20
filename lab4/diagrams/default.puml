@@ -1,0 +1,19 @@
+```plantuml
+
+@startuml compactors
+
+activate Client
+Client -> Composite: new()
+activate Composite
+Client <-- Composite: return Composite
+Client -> Composite: execute()
+Composite -> Leaf: execute()
+activate Leaf
+
+deactivate Leaf
+deactivate Composite
+
+
+@enduml
+
+```

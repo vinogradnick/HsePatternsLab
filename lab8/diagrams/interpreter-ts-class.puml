@@ -1,0 +1,53 @@
+@startuml interpreter-ts-class
+
+skinparam linetype ortho
+
+class Context<T>{
+    ctx: string;
+    Output: T;
+}
+
+abstract class AbstractExpression<T>{
+    interpret(context: Context<T>);
+    abstract MetricType();
+    abstract StructType();
+}
+class VoltageExpression{
+    MetricType();
+    StructType();
+}
+
+class AmperageExpression  {
+    MetricType();
+    StructType();
+
+}
+
+class PowerExpression {
+    MetricType();
+    StructType();
+}
+
+class ConsumptionExpression  {
+    MetricType();
+    StructType();
+}
+
+class TempExpression  {
+    MetricType();
+    StructType();
+}
+
+class LightExpression {
+    MetricType();
+    StructType();
+}
+AbstractExpression o-- Context
+VoltageExpression <|-- AbstractExpression
+AmperageExpression <|-- AbstractExpression
+PowerExpression <|-- AbstractExpression
+ConsumptionExpression <|-- AbstractExpression
+TempExpression <|-- AbstractExpression
+LightExpression <|--AbstractExpression
+
+@enduml

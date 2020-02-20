@@ -1,0 +1,17 @@
+```plantuml
+
+@startuml compactors
+
+activate Client
+Client -> Proxy: operation()
+activate Proxy
+Proxy -> Service: operation()
+activate Service
+
+deactivate Service
+deactivate Proxy
+
+
+@enduml
+
+```

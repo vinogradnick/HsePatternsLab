@@ -1,0 +1,41 @@
+```plantuml
+
+@startuml compactor-seq
+
+
+activate Client
+Client -> Proxy: speedUp()
+activate Proxy
+Proxy -> CarService: speedUp()
+activate CarService
+
+deactivate CarService
+deactivate Proxy
+
+Client -> Proxy: speedDown()
+activate Proxy
+Proxy -> CarService: speedDown()
+activate CarService
+
+
+
+deactivate CarService
+deactivate Proxy
+
+Client -> Proxy: gearUp()
+activate Proxy
+Proxy -> CarService: gearUp()
+activate CarService
+
+
+deactivate CarService
+deactivate Proxy
+
+@enduml
+
+
+
+
+@enduml
+
+```

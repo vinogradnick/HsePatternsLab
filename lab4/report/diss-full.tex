@@ -1,0 +1,221 @@
+\documentclass[PI,LAB]{HSEUniversity}
+% Возможные опции: KR или VKR; PI или BI
+\usepackage{svg}
+\usepackage{listings}
+
+\title{Организация паттернов проектирования. Структурный паттерн Компоновщик}
+\author{Виноградов Никита Андреевич}
+\supervisor{к.т.н., доцент кафедры Информационных технологий в бизнесе НИУ ВШЭ-Пермь}{А.В.~Кычкин}
+
+\Year{2020}
+
+
+% Ссылка на файл с описание библиографии
+\bibliography{library.bib}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% ТЕКСТ РАБОТЫ %%%%%%%%%%%%%%%
+\begin{document}
+
+% Обязательные элементы оформления: заголовочный слайд, аннотация, оглавление
+\maketitle
+
+
+
+\chapter{Компоновщик}
+Это структурный паттерн проектирования, который позволяет сгруппировать множество объектов в древовидную структуру, а затем работать с ней так, как будто это единичный объект.
+\section{Назначение}
+Компоновщик предлагает рассматривать  через единый интерфейс с общим методом получения информации.
+\section{Структура}
+
+\begin{FIGURE}[h]{Структура классов паттерна Компоновщик\label{fig:example-figure}}
+    \includegraphics[width=0.4\textwidth]{../out/diagrams/structure-ru}
+\end{FIGURE}
+
+\textbf{Участники:}
+\begin{itemize}
+    \item \emph{Client} - класс который вызывает методы компонента
+    \item \emph{Component} - интерфейс задает базу для остальных компонентов системы
+    \item \emph{Composite} - класc который выполняет работу над дочерними объектами в системе и позволяет пользоваться единым представлением
+    \item \emph{Leaf} - класс дочерние элементы компоненты на которых возлагается работа
+\end{itemize}
+
+\begin{FIGURE}[h]{Диаграмма последовательности паттерна Компоновщик\label{fig:example-figure}}
+    \includegraphics[width=0.5\textwidth]{../out/diagrams/default/compactors}
+\end{FIGURE}
+\section{Способ применения}
+Данный паттерн необходим когда в системе если несколько уровней объектов, и необходимо делегировать  работу для дочерних компонентам системы.
+\chapter{Реализация паттернов}
+
+\section{Диаграмма классов}
+\begin{FIGURE}[h]{Диаграмма классов паттерна Компоновщик\label{fig:example-figure}}
+    \includegraphics[width=\textwidth]{../out/diagrams/builder/compactor}
+\end{FIGURE}
+\emph{Участники:}
+\begin{itemize}
+    \item \emph{Car} - главный класс состовляющий объект
+    \item \emph{CarPart} - интерфейс обобщающий дочерние элементы объектаы
+    \item \emph{Damping,Stabilizer,Rack,Lever,Spring,Absorber,CylinderBlock,Sump,Crankshaft,Rod,Engine,Suspenstion} - классы выполняющие роль дочерних элементов системы.
+\end{itemize}
+\pagebreak
+\section{Диаграмма последовательности }
+
+\begin{FIGURE}[h]{Диаграмма последовательности паттерна Компоновщик\label{fig:example-figure}}
+    \includegraphics[width=0.9\textwidth]{../out/diagrams/builder-seq/compactor-seq}
+\end{FIGURE}
+\emph{Участники:}
+\begin{itemize}
+    \item \emph{Car} - главный класс состовляющий объект
+    \item \emph{CarPart} - интерфейс обобщающий дочерние элементы объектаы
+    \item \emph{Damping,Stabilizer,Rack,Lever,Spring,Absorber,CylinderBlock,Sump,Crankshaft,Rod,Engine,Suspenstion} - классы выполняющие роль дочерних элементов системы
+\end{itemize}
+
+
+
+\section{Код программы}
+\lstset{extendedchars=\true}
+\begin{lstlisting}[language=Go]
+    package car
+    
+    import (
+    "container/list"
+    "reflect"
+    )
+    
+    func TypeFlex(v interface{}) string {
+    return reflect.TypeOf(v).String()
+    }
+    
+    type Car struct {
+    Container *list.List
+    }
+    
+    func (e Car) Print(num int) {
+    for e := e.Container.Front(); e != nil; e = e.Next() {
+    
+    switch str := e.Value.(type) {
+    case CartPart:
+    println(TypeFlex(e.Value))
+    
+    
+    str.Print(num + 1)
+    break
+    }
+    }
+    }
+    func (e Car) AddPart(part interface{}) {
+    
+    e.Container.PushBack(part)
+    println(e.Container.Len())
+    }
+    func (e Car) RemovePart(part *interface{}) {
+    el := list.Element{Value: part}
+    e.Container.Remove(&el)
+    }
+    
+    type CartPart interface {
+    Print(num int)
+    }
+    package car
+    
+    import "container/list"
+    
+    //Демпфирующий
+    //Стабилизатор
+    //Стойка
+    //Рычаг
+    //Пружина
+    //Амортизатор
+    
+    type Damping struct {
+    }
+    type Stabilizer struct {
+    }
+    type Rack struct {
+    }
+    type Lever struct {
+    }
+    type Spring struct {
+    }
+    type Absorber struct {
+    }
+    type Suspenstion struct {
+    Container *list.List
+    }
+    
+    func (e Suspenstion) Print(num int) {
+    for e := e.Container.Front(); e != nil; e = e.Next() {
+    for i := 0; i < num; i++ {
+    print("-")
+    }
+    println(TypeFlex(e.Value))
+    }
+    }
+    
+    func (e Suspenstion) AddPart(part interface{}) {
+    e.Container.PushBack(part)
+    
+    }
+    func (e Suspenstion) RemovePart(part *interface{}) {
+    el := list.Element{Value: part}
+    e.Container.Remove(&el)
+    }
+    
+    func NewSuspenstion() Suspenstion {
+    return Suspenstion{Container: list.New()}
+    }
+    package car
+    
+    //блока цилиндров с картером,
+    //
+    //- головки блока цилиндров,
+    //
+    //- поддона картера двигателя,
+    //
+    //- поршней с кольцами и пальцами,
+    //
+    //- шатунов,
+    //
+    //- коленчатого вала,
+    //
+    //- маховика.
+    import (
+    "container/list"
+    )
+    
+    type Engine struct {
+    Container *list.List
+    }
+    
+    func (e Engine) Print(num int) {
+    for e := e.Container.Front(); e != nil; e = e.Next() {
+    for i := 0; i < num; i++ {
+    print("-")
+    }
+    println(TypeFlex(e.Value))
+    }
+    }
+    
+    type CylinderBlock struct {
+    }
+    type Sump struct {
+    }
+    type Crankshaft struct {
+    }
+    type Rod struct {
+    }
+    
+    func (e Engine) AddPart(part interface{}) {
+    e.Container.PushBack(part)
+    }
+    func (e Engine) RemovePart(part *interface{}) {
+    el := list.Element{Value: part}
+    e.Container.Remove(&el)
+    }
+    
+    type EnginePart struct {
+    }
+    
+    \end{lstlisting}
+
+\end{document}

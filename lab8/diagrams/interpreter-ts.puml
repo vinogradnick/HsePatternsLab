@@ -1,0 +1,39 @@
+@startuml interpreter-ts
+
+activate Client
+Client -> Context: createContext()
+activate Context
+Client <-- Context: return Context
+deactivate Context
+Client-->AbstractExpression: parseContext()
+
+activate AbstractExpression
+AbstractExpression --> VoltageExpression: interpet(Context context)
+activate VoltageExpression
+deactivate VoltageExpression
+
+AbstractExpression --> AmperageExpression: interpet(Context context)
+activate AmperageExpression
+deactivate AmperageExpression
+
+
+AbstractExpression --> PowerExpression: interpet(Context context)
+activate PowerExpression
+deactivate PowerExpression
+
+
+AbstractExpression --> ConsumptionExpression: interpet(Context context)
+activate ConsumptionExpression
+deactivate ConsumptionExpression
+
+
+AbstractExpression --> TempExpression: interpet(Context context)
+activate TempExpression
+deactivate TempExpression
+
+
+AbstractExpression --> LightExpression: interpet(Context context)
+activate LightExpression
+deactivate LightExpression
+deactivate AbstractExpression
+@enduml

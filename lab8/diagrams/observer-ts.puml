@@ -1,0 +1,12 @@
+@startuml observer-ts
+
+activate Client
+Client --> SubjectFlex: createSubject()
+activate SubjectFlex
+Client <-- SubjectFlex: return SubjectFlex
+Client-->UniqueObserver: attach()
+activate UniqueObserver
+SubjectFlex-->UniqueObserver: notify()
+deactivate UniqueObserver
+
+@enduml

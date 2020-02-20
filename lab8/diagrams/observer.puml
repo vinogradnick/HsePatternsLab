@@ -1,0 +1,11 @@
+@startuml observer
+activate Client
+Client -> Publisher: createPublisher()
+activate Publisher
+Client <-- Publisher: return Publisher
+Client-->Publisher: attach()
+Publisher-->ConcreteSubscription: notify()
+activate ConcreteSubscription
+
+
+@enduml

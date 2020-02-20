@@ -1,0 +1,9 @@
+[0] Config.pm:304> INFO - This is Biber 2.12
+[0] Config.pm:307> INFO - Logfile is 'diss-full.blg'
+[46] biber-darwin:315> INFO - === Thu Feb 20, 2020, 04:04:57
+[79] Biber.pm:371> INFO - Reading 'diss-full.bcf'
+[226] Biber.pm:889> INFO - Found 0 citekeys in bib section 0
+[241] Utils.pm:193> WARN - The file 'diss-full.bcf' does not contain any citations!
+[254] bbl.pm:636> INFO - Writing 'diss-full.bbl' with encoding 'UTF-8'
+[254] bbl.pm:739> INFO - Output to diss-full.bbl
+[254] Biber.pm:110> INFO - WARNINGS: 1

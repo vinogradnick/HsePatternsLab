@@ -1,0 +1,79 @@
+@startuml component
+
+skinparam linetype polyline
+package "QuarkLt Client"{
+    [quarkctl] <.. Client_HTTP
+    [webUI] <.. Client_HTTP
+}
+cloud "Kernel Server"{
+[Api Server] -- HTTP
+[Api Server] -- Client_HTTP
+[Controller] --> Etcd
+[Controller] -- Scheduler_HTTP
+[LogStash] -- ELK_HTTP
+[LogStash] --> [ClickHouse]
+
+}
+package "Node Server"{
+    
+    [Monitor] -- schedulerChan
+    [Monitor] -- HTTP_Metrics
+    [Monitor] -- HTTP
+    [ELK] -- logChan
+    [ELK] <.. schedulerChan
+    [ELK] ..> ELK_HTTP
+    [Scheduler] -- schedulerChan
+    [Scheduler] -- workerChan
+    [Scheduler] -- Scheduler_HTTP
+
+node "Worker"{
+
+    [quarklt] -- workerChan
+    [quarklt] -- gRPC
+    [quarklt] ..> logChan
+   
+   node "MircoVM"{
+       [quarlt_worker] -- external_HTTP
+       [quarlt_worker] - gRPC
+   }
+   
+}
+node "Agents"{
+    [SSH Agent]-- SSH
+    [SSH Agent] ..> metricChan
+    [Kubernetes Client] ..> metricChan
+    [Jenkins Client] ..> metricChan
+    [Gitlab Client] ..> metricChan
+    k8sApi -- [Kubernetes Client] 
+    jenkinsApi -- [Jenkins Client]
+    gitlabApi -- [Gitlab Client]
+    metricChan --  [metricServer] 
+    [metricServer] ..> HTTP_Metrics
+
+}
+
+
+
+
+}
+database "ClickHouse" {
+  folder "QuarkLT" {
+	[QuarkLT Node]
+  }
+  frame "Target Server" {
+	[TargetServer]
+  }
+}
+database "Etcd" {
+  folder "QuarkLT" {
+	[QuarkLT Node]
+  }
+  frame "Target Server" {
+	[TargetServer]
+  }
+}
+@enduml
+
+
+
+@enduml
